@@ -3,17 +3,23 @@ package com.example.sumpah;
 import javafx.scene.image.Image;
 
 public class Node {
-    private String key;
-    private String value;
-    private Node left, right;
+    private final String key;       // Kata asli
+    private final String value;     // Terjemahan
+    private Node left;
+    private Node right;
     private boolean isRed;
+    private String gimmickImagePath; // Path gambar gimik
 
     public Node(String key, String value) {
         this.key = key;
         this.value = value;
-        this.left = null;
-        this.right = null;
-        this.isRed = true; // Default node baru adalah merah
+        this.gimmickImagePath = null;
+    }
+
+    public Node(String key, String value, String gimmickImagePath) {
+        this.key = key;
+        this.value = value;
+        this.gimmickImagePath = gimmickImagePath;
     }
 
     public String getKey() {
@@ -44,28 +50,14 @@ public class Node {
         return isRed;
     }
 
-    public void setRed(boolean red) {
-        isRed = red;
+    public void setRed(boolean isRed) {
+        this.isRed = isRed;
     }
 
-    public static class GimmickNode extends Node {
-        private Image gimmickImage;
-
-        public GimmickNode(String key, String value, String imagePath) {
-            super(key, value);
-            if (imagePath != null && !imagePath.isEmpty()) {
-                this.gimmickImage = new Image(imagePath);
-            }
+    public Image getGimmickImage() {
+        if (gimmickImagePath != null && !gimmickImagePath.isEmpty()) {
+            return new Image(gimmickImagePath);
         }
-
-        public Image getGimmickImage() {
-            return gimmickImage;
-        }
-
-        public void setGimmickImage(String imagePath) {
-            if (imagePath != null && !imagePath.isEmpty()) {
-                this.gimmickImage = new Image(imagePath);
-            }
-        }
+        return null;
     }
 }

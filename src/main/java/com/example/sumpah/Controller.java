@@ -1,7 +1,8 @@
 package com.example.sumpah;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -16,84 +17,92 @@ public class Controller {
     private TextArea resultArea;
 
     @FXML
-    private CheckBox indToEngCheckBox;
+    private ImageView imageView;
 
     @FXML
-    private CheckBox engToIndCheckBox;
-
-    @FXML
-    private ImageView imageView; // Tambahkan ini pada FXML untuk menampilkan gambar gimik
+    private MenuButton menuButton;
 
     private final RedBlackTree tree = new RedBlackTree();
-    private boolean isIndoToEng = true; // Default penerjemahan Indonesia → Inggris
+    private boolean isIndoToEng = true;
 
+    @FXML
     public void initialize() {
-        tree.add("apel", "apple", "D:\\KULIAH\\kamus\\src\\main\\resources\\assets\\apel.jpg");
-        tree.add("matahari", "sun", "D:\\KULIAH\\kamus\\src\\main\\resources\\assets\\Matahari.jpg");
+        MenuItem indoToEng = new MenuItem("Indo → Eng");
+        indoToEng.setOnAction(e -> setIndoToEng());
+
+        MenuItem engToInd = new MenuItem("Eng → Indo");
+        engToInd.setOnAction(e -> setEngToInd());
+
+        menuButton.getItems().addAll(indoToEng, engToInd);
+        //DATA KAMUS
+        tree.add("apel", "apple", "D:\\KULIAH\\AKADEMIK\\SEMESTER 3\\STRUKDAT\\kamus\\src\\main\\resources\\assets\\apel.jpg");
+        tree.add("matahari", "sun", "D:\\KULIAH\\AKADEMIK\\SEMESTER 3\\STRUKDAT\\kamus\\src\\main\\resources\\assets\\Matahari.jpg");
+        tree.add("motor","bike", null);
         tree.add("hewan", "animal", null);
         tree.add("kipas", "fan", null);
         tree.add("kursi", "chair", null);
         tree.add("air", "water", null);
         tree.add("pintu", "door", null);
-        tree.add("pakaian", "clothes", null);
-        tree.add("sepatu", "shoes", null);
-        tree.add("motor", "bike", null);
-
-        // Atur status awal checkbox
-        indToEngCheckBox.setSelected(true); // Default Indonesia → Inggris
-        engToIndCheckBox.setSelected(false);
     }
+
 
     @FXML
     public void setIndoToEng() {
-        if (indToEngCheckBox.isSelected()) {
-            isIndoToEng = true;
-            engToIndCheckBox.setSelected(false); // Pastikan hanya satu checkbox yang aktif
-            resultArea.setText("Penerjemahan: Indonesia → Inggris");
-        } else {
-            // Cegah kedua checkbox tidak aktif bersamaan
-            indToEngCheckBox.setSelected(true);
-        }
+        isIndoToEng = true;
+        menuButton.setText("Indo → Eng");
+        resultArea.clear();
+        searchField.clear();
+        imageView.setImage(null);
+        System.out.println("Mode diatur: Indonesia → Inggris");
     }
 
     @FXML
     public void setEngToInd() {
-        if (engToIndCheckBox.isSelected()) {
-            isIndoToEng = false;
-            indToEngCheckBox.setSelected(false); // Pastikan hanya satu checkbox yang aktif
-            resultArea.setText("Penerjemahan: Inggris → Indonesia");
-        } else {
-            // Cegah kedua checkbox tidak aktif bersamaan
-            engToIndCheckBox.setSelected(true);
-        }
+        isIndoToEng = false;
+        menuButton.setText("Eng → Indo");
+        resultArea.clear();
+        searchField.clear();
+        imageView.setImage(null);
+        System.out.println("Mode diatur: Inggris → Indonesia");
     }
 
     @FXML
     public void searchWord() {
         String word = searchField.getText().trim();
-
         if (word.isEmpty()) {
-            resultArea.setText("Harap masukkan kata yang ingin diterjemahkan.");
-            imageView.setImage(null); // Kosongkan gambar
+            resultArea.setText("Masukkan kata untuk mencari terjemahan.");
+            imageView.setImage(null);
             return;
         }
 
-        // Terjemahkan kata berdasarkan pilihan arah
-        String result = (isIndoToEng) ? tree.translate(word) : tree.translateReverse(word);
+        String translation;
+        Image gimmickImage = null;
 
-        if (result != null) {
-            resultArea.setText(result);
-
-            // Periksa apakah ada gambar gimik untuk kata ini
-            Image gimmickImage = tree.getGimmickImage(word);
-            if (gimmickImage != null) {
-                imageView.setImage(gimmickImage); // Tampilkan gambar jika ada
-            } else {
-                imageView.setImage(null); // Kosongkan gambar jika tidak ada
-            }
+        if (isIndoToEng) {
+            // Translate from Indonesia to English
+            translation = tree.translate(word);
+            gimmickImage = tree.getGimmickImage(word);  // Get gimmick image
         } else {
-            resultArea.setText("Kata tidak ditemukan dalam kamus!");
-            imageView.setImage(null); // Kosongkan gambar
+            // Translate from English to Indonesia
+            translation = tree.translateReverse(word);  // Reverse translation
+            if (translation != null) {
+                gimmickImage = tree.getGimmickImage(translation);
+            }
+        }
+
+        if (translation == null) {
+            resultArea.setText("Kata tidak ditemukan.");
+            imageView.setImage(null);
+        } else {
+            resultArea.setText(translation);
+
+            if (gimmickImage != null) {
+                imageView.setImage(gimmickImage);
+            } else {
+                imageView.setImage(null);
+            }
         }
     }
+
 }
+
