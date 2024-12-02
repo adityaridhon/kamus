@@ -28,9 +28,16 @@ public class Controller {
     private boolean isIndoToEng = true; // Default penerjemahan Indonesia → Inggris
 
     public void initialize() {
-        tree.add("apel", "apple", "D:\\KULIAH\\AKADEMIK\\SEMESTER 3\\STRUKDAT\\sumpah\\src\\main\\resources\\assets\\apel.jpg");
-        tree.add("sekolah", "school", null);
-        tree.add("guru", "teacher", null);                  // Tidak ada gimik
+        tree.add("apel", "apple", "D:\\KULIAH\\kamus\\src\\main\\resources\\assets\\apel.jpg");
+        tree.add("matahari", "sun", "D:\\KULIAH\\kamus\\src\\main\\resources\\assets\\Matahari.jpg");
+        tree.add("hewan", "animal", null);
+        tree.add("kipas", "fan", null);
+        tree.add("kursi", "chair", null);
+        tree.add("air", "water", null);
+        tree.add("pintu", "door", null);
+        tree.add("pakaian", "clothes", null);
+        tree.add("sepatu", "shoes", null);
+        tree.add("motor", "bike", null);
 
         // Atur status awal checkbox
         indToEngCheckBox.setSelected(true); // Default Indonesia → Inggris
@@ -75,7 +82,7 @@ public class Controller {
         String result = (isIndoToEng) ? tree.translate(word) : tree.translateReverse(word);
 
         if (result != null) {
-            resultArea.setText("Terjemahan: " + result);
+            resultArea.setText(result);
 
             // Periksa apakah ada gambar gimik untuk kata ini
             Image gimmickImage = tree.getGimmickImage(word);

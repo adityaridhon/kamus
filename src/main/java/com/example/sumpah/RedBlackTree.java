@@ -84,13 +84,6 @@ public class RedBlackTree {
         return null; // Jika tidak ada gimik
     }
 
-    // Mendapatkan kata acak (contoh untuk "Word of the Day")
-    public String getRandomWord() {
-        Random random = new Random();
-        int randomIndex = random.nextInt(countNodes(root)); // Menghitung jumlah total node
-        return getNodeAtIndex(root, new int[]{0}, randomIndex).getKey(); // Traverse in-order untuk node tertentu
-    }
-
     private int countNodes(Node current) {
         if (current == null) {
             return 0;

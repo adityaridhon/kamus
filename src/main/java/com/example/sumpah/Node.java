@@ -48,7 +48,6 @@ public class Node {
         isRed = red;
     }
 
-    // Subclass statis untuk Node dengan gimik
     public static class GimmickNode extends Node {
         private Image gimmickImage;
 

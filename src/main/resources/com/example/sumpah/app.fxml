@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.TextArea?>
@@ -10,15 +11,24 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="CENTER" spacing="15" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sumpah.Controller">
-    <Text text="KamusKu">
+<VBox alignment="CENTER" prefHeight="567.0" prefWidth="655.0" spacing="15" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.sumpah.Controller">
+    <Text fill="#d10909" text="KamusKu">
         <font>
-            <Font size="40.0" />
+            <Font name="Sans Serif Collection" size="40.0" />
         </font>
     </Text>
-
-    <Text text="Cari kata" />
-    <TextField fx:id="searchField" promptText="Masukkan kata..." />
+    <HBox prefHeight="8.0" prefWidth="579.0">
+        <children>
+            <Text text="Cari kata" />
+        </children>
+        <VBox.margin>
+            <Insets left="50.0" />
+        </VBox.margin>
+    </HBox>
+    <TextField fx:id="searchField" prefHeight="11.0" prefWidth="554.0" promptText="Masukkan kata...">
+        <VBox.margin>
+            <Insets left="50.0" right="50.0" />
+        </VBox.margin></TextField>
 
     <HBox alignment="CENTER" spacing="10">
         <CheckBox fx:id="indToEngCheckBox" onAction="#setIndoToEng" text="Indo → Eng" />
@@ -26,8 +36,20 @@
     </HBox>
 
     <Button fx:id="searchButton" onAction="#searchWord" text="Cari" />
-    <TextArea fx:id="resultArea" editable="false" />
+    <HBox prefHeight="0.0" prefWidth="478.0">
+        <children>
+            <Text text="Terjemahan">
+                <HBox.margin>
+                    <Insets left="50.0" />
+                </HBox.margin>
+            </Text>
+        </children>
+    </HBox>
+    <TextArea fx:id="resultArea" editable="false" prefHeight="11.0" prefWidth="554.0">
+        <VBox.margin>
+            <Insets left="50.0" right="50.0" />
+        </VBox.margin></TextArea>
 
     <!-- Area untuk Gimik Gambar -->
-    <ImageView fx:id="imageView" fitWidth="200" fitHeight="200" preserveRatio="true" />
+    <ImageView fx:id="imageView" fitHeight="200" fitWidth="259.0" preserveRatio="true" />
 </VBox>
